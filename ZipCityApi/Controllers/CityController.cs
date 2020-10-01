@@ -22,7 +22,11 @@ namespace ZipCityApi.Controllers
             if (response.IsSuccessStatusCode)
             {
                 var data = await response.Content.ReadAsAsync<ZipCity>();
-                return Ok(data);
+
+                var res = Request.CreateResponse(HttpStatusCode.OK, data);
+                res.Headers.Add("Access-Control-Allow-Origin", "*");
+
+                return ResponseMessage(res);
             }
             return StatusCode(HttpStatusCode.ServiceUnavailable);
         }
